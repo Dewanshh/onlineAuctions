@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../Layout/Layout'
 
-function CustomerRegisterPage() {
+function CustomerMyAccountPage() {
     return (
         <Layout>
         <div className='bg-red-200 h-screen'>
@@ -59,4 +59,4 @@ function CustomerRegisterPage() {
       )
 }
 
-export default CustomerRegisterPage
+export default CustomerMyAccountPage

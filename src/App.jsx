@@ -13,6 +13,9 @@ import ProductBidReport from './Pages/Admin Dashboard/ProductBidReport';
 import ChagePasswordForm from './Pages/FormsPage/ChagePasswordForm';
 import AuctionsListingPage from './Pages/Auctions Listing Page/AuctionListingPage';
 import AuctioningProductDescriptionPage from './Pages/AuctioningProductDescription Pages/AuctioningProductDescriptionPage';
+import CustomerDashboard from './Pages/Customer Dashboard Pages/CustomerDashboard';
+import CustomerMyAccountPage from './Pages/Customer Dashboard Pages/CustomerMyAccountPage';
+import CustomerMyBidsPage from './Pages/Customer Dashboard Pages/CustomerMyBidsPage';
 
 const App = () => {
    return (
@@ -36,6 +39,11 @@ const App = () => {
         <Route path='/productReport' element={<ProductReportScreen/>}/>
         <Route path='/productBidReport' element={<ProductBidReport/>}/>
         <Route path='/changePassword' element={<ChagePasswordForm/>}/>
+
+
+        <Route path='/customerDashboard' element={<CustomerDashboard />}/>
+        <Route path='/customerMyAccount' element={<CustomerMyAccountPage/>} />
+        <Route path='/customerMyBids' element={<CustomerMyBidsPage/>} />
 
 
 

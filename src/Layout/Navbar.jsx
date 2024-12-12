@@ -8,6 +8,7 @@ function Navbar() {
       <div className='flex flex-row justify-end space-x-4 p-2 hover:cursor-pointer'>
         <p onClick={()=>navigate('/')}>Home</p>
         <p onClick={()=>navigate('/adminDashboard')}>Admin Dashboard</p>
+        <p onClick={()=>navigate('/customerDashboard')}>Customer Dashboard</p>
         <p>My Profile</p>
         <p onClick={()=>navigate('/auctions')}>Auctions</p>
         <p onClick={()=>navigate('/loginOptions')}>Login</p>
