@@ -1,7 +1,11 @@
 import Layout from "../Layout/Layout"
+import { getRoleFromToken } from "../utils/auth"
 
 
 export const HomePage=()=>{
+    // const role=rolge
+    // console.log(role)
+
     return (
         <Layout>
             <div className="h-screen bg-blue-200">

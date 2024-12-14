@@ -1,6 +1,7 @@
 import React from 'react'
 import Layout from '../../Layout/Layout'
 import { useNavigate } from 'react-router-dom'
+import { logout } from '../../utils/auth';
 
 function AdminDashboard() { 
     const navigate=useNavigate();
@@ -31,7 +32,11 @@ function AdminDashboard() {
                     ))
                 }
             </div>
+            <div onClick={logout} className='hover:cursor-pointer w-1/2 bg-orange-400 p-2 my-2 rounded-xl' >
+                            Logout
+            </div>
         </div>
+        
     </div>
    </Layout>
   )
