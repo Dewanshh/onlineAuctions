@@ -16,6 +16,7 @@ function AdminLoginPage() {
             })
             console.log(response.data);
             localStorage.setItem('token',response.data.token);
+            localStorage.setItem('userEmail',email);
             navigate('/')
 
         }catch(e){

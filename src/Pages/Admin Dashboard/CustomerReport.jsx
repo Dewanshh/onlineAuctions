@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../Layout/Layout';
+import axios from 'axios';
+import api from '../../utils/apiUtils';
 
 function CustomerReport() {
+
+  const [customerData,setCustomerData]=useState([]);
+
+  const fetchCustomers=async ()=>{
+    try{
+      const responseData=await api.get('/customers/all').then(((json)=>json.data));
+      setCustomerData(responseData);
+
+
+    }catch(e)
+    {
+      console.log(e);
+    }
+  }
+  useEffect(()=>{
+    fetchCustomers();
+
+  },[customerData])
   return (
     <Layout>
       <div className="p-4">
@@ -20,18 +40,22 @@ function CustomerReport() {
             </thead>
             <tbody>
 
-              <tr className="hover:bg-gray-100">
-                <td className="px-4 py-2 border border-gray-300">CUST001</td>
-                <td className="px-4 py-2 border border-gray-300">John Doe</td>
-                <td className="px-4 py-2 border border-gray-300">johndoe@example.com</td>
-                <td className="px-4 py-2 border border-gray-300">1234567890</td>
-                <td className="px-4 py-2 border border-gray-300">New York</td>
-                <td className="px-4 py-2 border border-gray-300">
-                  <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                    View
-                  </button>
-                </td>
-              </tr>
+              {
+                customerData.map((item,index)=>{
+                  return <tr className="hover:bg-gray-100">
+                  <td className="px-4 py-2 border border-gray-300">{item.id}</td>
+                  <td className="px-4 py-2 border border-gray-300">{item.name}</td>
+                  <td className="px-4 py-2 border border-gray-300">{item.email}</td>
+                  <td className="px-4 py-2 border border-gray-300">{item.mobile}</td>
+                  <td className="px-4 py-2 border border-gray-300">{item.customerCity}, {item.customerCountry}</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                      View
+                    </button>
+                  </td>
+                </tr>
+                })
+              }
             
             </tbody>
           </table>

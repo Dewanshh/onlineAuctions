@@ -26,23 +26,20 @@ function CustomerRegisterPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log(formData)
+
         try {
-            // Await the API call to ensure it completes before moving on
+
             const response = await api.post('/auth/registerCustomer', {
                 email: formData.email,
-                password: formData.customerPassword, // Fix the password field name
+                password: formData.customerPassword, 
                 name: formData.name,
-                mobile: formData.mobileNumber, // Fix the mobile field name
+                mobile: formData.mobileNumber,
                 role: 'customer',
                 customerCity: formData.customerCity,
                 customerAddress: formData.customerAddress,
                 customerCountry: formData.customerCountry,
                 customerState: formData.customerState,
             });
-
-            // console.log(response.data);
-            // Navigate after receiving the response
             navigate('/adminDashboard');
         } catch (e) {
             console.log('Error during registration:', e);

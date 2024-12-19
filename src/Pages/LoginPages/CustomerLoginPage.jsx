@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import Layout from '../../Layout/Layout'
 import api from '../../utils/apiUtils';
+import { useNavigate } from 'react-router-dom';
 
 function CustomerLoginPage() {
+    const navigate=useNavigate();
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
     const handleLogin=async (e)=>{
@@ -12,7 +14,10 @@ function CustomerLoginPage() {
                 email,password,role:"customer"
             })
             console.log(response.data);
+            localStorage.setItem('userEmail',email);
             localStorage.setItem('token',response.data.token);
+            navigate('/')
+            
 
         }catch(e){
             console.log(e);
