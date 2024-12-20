@@ -10,38 +10,42 @@ function AuctioningProductDescriptionPage() {
   const [bids, setBids] = useState([]);
   const [bidAmount, setBidAmount] = useState("");
   const [bidStartDate, setBidStartDate] = useState(null);
-  const [bidEndTime, setBidEndTime] = useState(null);
+  const [auctionEndTime, setAuctionEndTime] = useState(null);
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [isBidClosed, setIsBidClosed] = useState(false);
   const [isBidNotStarted, setIsBidNotStarted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
 
 
   const fetchProduct = async () => {
+    setLoading(true);
     try {
       const response = await api.get(`/products/${id}`);
       setProduct(response.data);
       const bidStartDate = response.data.bidStartDate;
-      const bidEndTime = new Date(bidStartDate); 
-
-
-      bidEndTime.setHours(bidEndTime.getHours() + 1);
-
+      const auctionEndTime = new Date(bidStartDate);
+      auctionEndTime.setHours(auctionEndTime.getHours() + 1); 
 
       setBidStartDate(bidStartDate);
-      setBidEndTime(bidEndTime);
+      setAuctionEndTime(auctionEndTime);
     } catch (e) {
       console.error("Error fetching product:", e);
+    } finally {
+      setLoading(false);
     }
   };
 
 
   const fetchBids = async () => {
+    setLoading(true);
     try {
       const response = await api.get(`/bids/${id}`);
-      setBids(response.data); 
+      setBids(response.data);
     } catch (e) {
       console.error("Error fetching bids:", e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,20 +75,19 @@ function AuctioningProductDescriptionPage() {
       fetchBids(); 
     } catch (e) {
       console.error("Error placing bid:", e);
-      alert(e.response.data.message);
+      alert(e.response?.data?.message || "Error placing bid.");
     }
   };
 
 
   const getImageUrl = (imageData) => {
     if (imageData && imageData.data) {
-      const blob = new Blob([new Uint8Array(imageData.data)], {
-        type: "image/jpeg",
-      });
+      const blob = new Blob([new Uint8Array(imageData.data)], { type: "image/jpeg" });
       return URL.createObjectURL(blob);
     }
     return null;
   };
+
 
   const formatDate = (dateStr) => {
     if (!dateStr) return "N/A";
@@ -103,8 +106,8 @@ function AuctioningProductDescriptionPage() {
 
   const calculateTimeRemaining = () => {
     const now = new Date();
-    if (bidEndTime) {
-      const remainingTime = bidEndTime - now;
+    if (auctionEndTime) {
+      const remainingTime = auctionEndTime - now;
       if (remainingTime <= 0) {
         setIsBidClosed(true);
         setTimeRemaining(null);
@@ -121,18 +124,27 @@ function AuctioningProductDescriptionPage() {
     if (bidStartDate) {
       const bidStart = new Date(bidStartDate);
       if (now < bidStart) {
-        setIsBidNotStarted(true); 
+        setIsBidNotStarted(true);
       } else {
-        setIsBidNotStarted(false); 
+        setIsBidNotStarted(false);
       }
     }
+  };
+
+
+  const getHighestBid = () => {
+    if (bids.length > 0) {
+      return bids.reduce((maxBid, bid) => (bid.bidAmount > maxBid ? bid.bidAmount : maxBid), 0);
+    }
+    return 0;
   };
 
 
   useEffect(() => {
     fetchProduct();
     fetchBids();
-  }, []);
+  }, [id]);
+
 
   useEffect(() => {
     if (product?.productImage) {
@@ -145,7 +157,7 @@ function AuctioningProductDescriptionPage() {
     }, 1000);
 
     return () => clearInterval(intervalId); 
-  }, [product, bidStartDate, bidEndTime]);
+  }, [product, bidStartDate, auctionEndTime]);
 
 
   const formatTime = (milliseconds) => {
@@ -157,7 +169,7 @@ function AuctioningProductDescriptionPage() {
 
   return (
     <Layout>
-      <div className="p-8 bg-white my-4">
+      <div className="p-8 bg-white my-4 min-h-screen">
         <div>
           <p className="border-b-[1px] pb-2 font-medium text-xl">
             Product Title: {product?.title}
@@ -188,7 +200,6 @@ function AuctioningProductDescriptionPage() {
                   </th>
                   <td className="bg-gray-400 p-2">{product?.productType}</td>
                 </tr>
-               
                 <tr>
                   <th className="bg-gray-600 text-white p-2 border-b-[1px]">
                     Product City
@@ -209,22 +220,26 @@ function AuctioningProductDescriptionPage() {
                   </th>
                   <td className="bg-white p-2">{product?.minimumBid}</td>
                 </tr>
-                {bids.length>0&&<tr>
-                <th  className="bg-gray-600 text-white p-2 border-b-[1px]">Highest Bid</th>
-
-                  <td className="bg-gray-400 p-2">         Rs. {bids[0]?.bidAmount}
+                <tr>
+                  <th className="bg-gray-600 text-white p-2 border-b-[1px]">
+                    Highest Bid
+                  </th>
+                  <td className="bg-gray-400 p-2">
+                    Rs. {getHighestBid()}
                   </td>
-                </tr>}
-
-                {product?.winner&&<tr>
-                <th  className="bg-gray-600 text-white p-2 border-b-[1px]">Bid Winner!</th>
-                  
-                  <td className="bg-white p-2"><div> 
-                    <p> Email:  {product?.winner?.userEmail}</p> 
-                    <p>Highest Bid: Rs. {product?.winner?.bidAmount}</p>   
-                  </div>    
+                </tr>
+                {product?.winner && (
+                  <tr>
+                    <th className="bg-gray-600 text-white p-2 border-b-[1px]">
+                      Bid Winner!
+                    </th>
+                    <td className="bg-white p-2">
+                      <p>Email: {product?.winner?.userEmail}</p>
+                      <p>Highest Bid: Rs. {product?.winner?.bidAmount}</p>  
                   </td>
-                </tr>}
+                  </tr>
+
+                )}
               </tbody>
             </table>
           </div>
@@ -259,20 +274,27 @@ function AuctioningProductDescriptionPage() {
             )}
           </div>
           <div>
-            {isBidClosed?<p className="text-2xl font-medium border-b-2 p-2">Bid History:</p>:<p className="text-2xl font-medium border-b-2 p-2">Biddings:</p>}
+            {isBidClosed ? (
+              <p className="text-2xl font-medium border-b-2 p-2">Bid History:</p>
+            ) : (
+              <p className="text-2xl font-medium border-b-2 p-2">Biddings:</p>
+            )}
             <div className="p-2">
-              {
-              bids.length>0?bids.map((item, index) => (
-                <div key={index} className="w-full border-[2px] my-2 p-2">
-                  <p className="my-2 text-xl">
-                    Bid: <span className="text-green-600 ml-2">Rs. {item.bidAmount}</span>
-                  </p>
-                  <div className="my-2 flex justify-between">
-                    <p>User: {item.userEmail}</p>
-                    <p>Bidded On: {formatDate(item.createdAt)}</p>
+              {bids.length > 0 ? (
+                bids.map((item, index) => (
+                  <div key={index} className="w-full border-[2px] my-2 p-2">
+                    <p className="my-2 text-xl">
+                      Bid: <span className="text-green-600 ml-2">Rs. {item.bidAmount}</span>
+                    </p>
+                    <div className="my-2 flex justify-between">
+                      <p>User: {item.userEmail}</p>
+                      <p>Bidded On: {formatDate(item.createdAt)}</p>
+                    </div>
                   </div>
-                </div>
-              )):<p className="h-1/2 w-full text-xl text-red-600">No One Bidded</p>}
+                ))
+              ) : (
+                <p className="h-1/2 w-full text-xl text-red-600">No One Bidded</p>
+              )}
             </div>
           </div>
         </div>

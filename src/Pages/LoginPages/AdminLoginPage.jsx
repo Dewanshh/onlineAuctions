@@ -17,6 +17,8 @@ function AdminLoginPage() {
             console.log(response.data);
             localStorage.setItem('token',response.data.token);
             localStorage.setItem('userEmail',email);
+            localStorage.setItem('role','admin');
+
             navigate('/')
 
         }catch(e){

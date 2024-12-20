@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../Layout/Layout';
 import api from '../../utils/apiUtils';
+import { useNavigate } from 'react-router-dom';
 
 function ProductReportScreen() {
   const [productList, setProductList] = useState([]);
+  const navigate=useNavigate();
 
   const fetchProductData = async () => {
     try {
@@ -28,9 +30,9 @@ function ProductReportScreen() {
 
   return (
     <Layout>
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-4">All Product Report</h2>
-        <div className="overflow-x-auto">
+      <div className="p-4 bg-gray-100 min-h-screen">
+      <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Product Report</h2>
+      <div className="overflow-x-auto">
           <table className="min-w-full table-auto border-collapse border border-gray-300">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
@@ -66,7 +68,7 @@ function ProductReportScreen() {
                   <td className="px-4 py-2 border border-gray-300">{item.minimumBid}</td>
                   <td className="px-4 py-2 border border-gray-300">{item.productType}</td>
                   <td className="px-4 py-2 border border-gray-300">
-                    <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                    <button onClick={()=>navigate(`/listing/${item.id}`)} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                       View
                     </button>
                   </td>

@@ -16,6 +16,7 @@ function CustomerLoginPage() {
             console.log(response.data);
             localStorage.setItem('userEmail',email);
             localStorage.setItem('token',response.data.token);
+            localStorage.setItem('role','customer');
             navigate('/')
             
 
