@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../Layout/Layout';
 import api from '../../utils/apiUtils';
 import { useNavigate } from 'react-router-dom';
 
 function ProductForm() {
   const navigate = useNavigate();
+  const [sellers,setSellers]=useState([]);
+
   
   const [formData, setFormData] = useState({
     title: '',
@@ -57,12 +59,27 @@ function ProductForm() {
         productImage: formData.productImage,
         productDescription: formData.productDescription,
       });
-      console.log(response.data);
+      // console.log(response.data);
       navigate('/adminDashboard');
     } catch (error) {
       console.log('Error submitting product form:', error);
     }
   };
+
+  const fetchSellers = async () => {
+    try {
+      const sellers = await api.get('/sellers/all').then((res) => res.data);
+      if (sellers) setSellers(sellers);
+    } catch (error) {
+      console.error('Error fetching sellers:', error);
+    }
+  };
+  
+
+  useEffect(()=>{
+    fetchSellers();
+  },[]);
+
 
   return (
     <Layout>
@@ -88,17 +105,24 @@ function ProductForm() {
 
 
               <div className="flex flex-col">
-                <label htmlFor="sellerName" className="text-gray-700">Seller Name</label>
-                <input
-                  id="sellerName"
-                  name="sellerName"
-                  type="text"
-                  value={formData.sellerName}
-                  onChange={handleChange}
-                  className="p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
+  <label htmlFor="sellerName" className="text-gray-700">Seller Name</label>
+  <select
+    id="sellerName"
+    name="sellerName"
+    value={formData.sellerName}
+    onChange={handleChange}
+    className="p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    required
+  >
+    <option value="" disabled>Select a Seller</option>
+    {sellers.map((seller) => (
+      <option key={seller.id} value={seller.name}>
+        {seller.name}
+      </option>
+    ))}
+  </select>
+</div>
+
 
 
               <div className="flex flex-col">

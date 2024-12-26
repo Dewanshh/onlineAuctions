@@ -18,7 +18,7 @@ function AdminDashboard() {
 
   return (
     <Layout>
-      <div className="my-8 px-4">
+      <div className="my-8 px-4 min-h-screen">
         <div className="text-center mb-6">
           <h2 className="text-3xl font-semibold text-gray-800">Admin Dashboard</h2>
           <p className="text-lg text-gray-600">Welcome to Online Auction System</p>
@@ -37,7 +37,10 @@ function AdminDashboard() {
         </div>
 
         <div
-          onClick={logout}
+          onClick={()=>{logout();
+            navigate('/loginOptions')
+
+          }}
           className="bg-red-500 hover:bg-red-600 text-white p-6 rounded-lg shadow-lg mt-8 mx-auto w-full sm:w-1/2 lg:w-1/4 text-center cursor-pointer transition-all transform hover:scale-105"
         >
           Logout

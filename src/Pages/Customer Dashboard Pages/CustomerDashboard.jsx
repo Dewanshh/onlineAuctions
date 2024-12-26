@@ -35,7 +35,10 @@ function CustomerDashboard() {
         </div>
 
         <div
-          onClick={logout}
+          onClick={()=>{logout();
+                      navigate('/loginOptions')
+          
+                    }}
           className="bg-red-500 hover:bg-red-600 text-white p-6 rounded-lg shadow-lg mt-8 mx-auto w-full sm:w-1/2 lg:w-1/4 text-center cursor-pointer transition-all transform hover:scale-105"
         >
           Logout

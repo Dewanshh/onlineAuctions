@@ -1,24 +1,33 @@
-import React from 'react'
-import Layout from '../../Layout/Layout'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import Layout from '../../Layout/Layout';
+import { useNavigate } from 'react-router-dom';
 
 function LoginOptions() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   return (
     <Layout>
-        <div className='w-full bg-red-200 flex  justify-center items-center my-2 h-screen'>
-            <div className='flex flex-col w-1/2 items-center justify-center border-2'>
-                <p className='py-2 border-b-2 w-full text-center'>Login to your account</p>
-                <div className='p-2'>
-
-                <div onClick={()=>navigate("/loginA")} className="py-2 bg-black w-full text-center my-2 px-2 rounded-xl hover:cursor-pointer text-white">Admin Login</div>
-                {/* <div onClick={()=>navigate("/login")} className="py-2 bg-black w-full text-center my-2 px-2 rounded-xl hover:cursor-pointer text-white">Seller Login</div> */}
-                <div onClick={()=>navigate("/loginC")} className="py-2 bg-black w-full text-center my-2 px-2 rounded-xl hover:cursor-pointer text-white">Customer Login</div>
-                </div>
-            </div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md text-center">
+          <h2 className="text-2xl font-bold text-gray-700 mb-4">Login to Your Account</h2>
+          <p className="text-sm text-gray-500 mb-6">Select your login type to proceed</p>
+          <div className="space-y-4">
+            <button
+              onClick={() => navigate('/loginA')}
+              className="w-full py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition duration-200"
+            >
+              Admin Login
+            </button>
+            <button
+              onClick={() => navigate('/loginC')}
+              className="w-full py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition duration-200"
+            >
+              Customer Login
+            </button>
+          </div>
         </div>
-        </Layout>
-  )
+      </div>
+    </Layout>
+  );
 }
 
-export default LoginOptions
+export default LoginOptions;

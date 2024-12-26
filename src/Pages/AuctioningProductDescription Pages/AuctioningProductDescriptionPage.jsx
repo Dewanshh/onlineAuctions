@@ -16,6 +16,8 @@ function AuctioningProductDescriptionPage() {
   const [isBidNotStarted, setIsBidNotStarted] = useState(false);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
+  const role=localStorage.getItem("role");
+  // console.log(role);
 
 
   const fetchProduct = async () => {
@@ -243,7 +245,8 @@ function AuctioningProductDescriptionPage() {
               </tbody>
             </table>
           </div>
-          <div className="my-4">
+          {role==="admin"?<p className="text-red-600 p-2 text-xl">Admin Can't Bid</p>
+              :<div className="my-4">
             {isBidNotStarted ? (
               <p className="text-blue-600 p-2">Bid Not Started Yet</p>
             ) : isBidClosed ? (
@@ -272,7 +275,7 @@ function AuctioningProductDescriptionPage() {
                 )}
               </div>
             )}
-          </div>
+          </div>}
           <div>
             {isBidClosed ? (
               <p className="text-2xl font-medium border-b-2 p-2">Bid History:</p>

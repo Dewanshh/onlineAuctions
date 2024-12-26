@@ -59,7 +59,10 @@ function Navbar() {
           ) : (
             <p
               className="hover:text-teal-200 cursor-pointer transition-colors"
-              onClick={() => navigate('/loginOptions')}
+             onClick={()=>{logout();
+                         navigate('/loginOptions')
+             
+                       }}
             >
               Login
             </p>
