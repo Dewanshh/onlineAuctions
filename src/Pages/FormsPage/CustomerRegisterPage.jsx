@@ -15,6 +15,8 @@ function CustomerRegisterPage() {
     customerCountry: '',
     customerAddress: '',
   });
+  
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,8 +26,28 @@ function CustomerRegisterPage() {
     });
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name) newErrors.name = "Name is required.";
+    if (!formData.mobileNumber) newErrors.mobileNumber = "Mobile number is required.";
+    if (!formData.email) newErrors.email = "Email is required.";
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid.";
+    if (!formData.customerPassword) newErrors.customerPassword = "Password is required.";
+    if (!formData.customerCity) newErrors.customerCity = "City is required.";
+    if (!formData.customerState) newErrors.customerState = "State is required.";
+    if (!formData.customerCountry) newErrors.customerCountry = "Country is required.";
+    if (!formData.customerAddress) newErrors.customerAddress = "Address is required.";
+
+    return newErrors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formErrors = validateForm();
+    setErrors(formErrors);
+    
+    if (Object.keys(formErrors).length > 0) return;
 
     try {
       const response = await api.post('/auth/registerCustomer', {
@@ -54,7 +76,6 @@ function CustomerRegisterPage() {
           </h2>
 
           <form onSubmit={handleSubmit}>
-
             <div className="mb-6">
               <p className="text-xl font-medium text-gray-700 mb-4">Personal Details</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -67,8 +88,8 @@ function CustomerRegisterPage() {
                     value={formData.name}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="mobileNumber" className="text-gray-600 mb-2">Mobile</label>
@@ -79,12 +100,11 @@ function CustomerRegisterPage() {
                     value={formData.mobileNumber}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.mobileNumber && <p className="text-red-500 text-sm">{errors.mobileNumber}</p>}
                 </div>
               </div>
             </div>
-
 
             <div className="mb-6">
               <p className="text-xl font-medium text-gray-700 mb-4">Login Details</p>
@@ -98,8 +118,8 @@ function CustomerRegisterPage() {
                     value={formData.email}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="customerPassword" className="text-gray-600 mb-2">Password</label>
@@ -110,8 +130,8 @@ function CustomerRegisterPage() {
                     value={formData.customerPassword}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.customerPassword && <p className="text-red-500 text-sm">{errors.customerPassword}</p>}
                 </div>
               </div>
             </div>
@@ -128,8 +148,8 @@ function CustomerRegisterPage() {
                     value={formData.customerCity}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.customerCity && <p className="text-red-500 text-sm">{errors.customerCity}</p>}
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="customerState" className="text-gray-600 mb-2">State</label>
@@ -140,8 +160,8 @@ function CustomerRegisterPage() {
                     value={formData.customerState}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.customerState && <p className="text-red-500 text-sm">{errors.customerState}</p>}
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="customerCountry" className="text-gray-600 mb-2">Country</label>
@@ -152,8 +172,8 @@ function CustomerRegisterPage() {
                     value={formData.customerCountry}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.customerCountry && <p className="text-red-500 text-sm">{errors.customerCountry}</p>}
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="customerAddress" className="text-gray-600 mb-2">Address</label>
@@ -163,12 +183,11 @@ function CustomerRegisterPage() {
                     value={formData.customerAddress}
                     onChange={handleChange}
                     className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                   />
+                  {errors.customerAddress && <p className="text-red-500 text-sm">{errors.customerAddress}</p>}
                 </div>
               </div>
             </div>
-
 
             <div className="flex justify-center mt-6">
               <button

@@ -210,7 +210,7 @@ function AuctioningProductDescriptionPage() {
                 </tr>
                 <tr>
                   <th className="bg-gray-600 text-white p-2 border-b-[1px]">
-                    Post Date
+                    Bid Start Date
                   </th>
                   <td className="bg-gray-400 p-2">
                     {formatDate(product?.createdAt)}

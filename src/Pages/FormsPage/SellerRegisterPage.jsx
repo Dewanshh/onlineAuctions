@@ -29,10 +29,13 @@ function SellerRegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     if (!formData.email || !formData.name || !formData.contactNumber || !formData.city || !formData.state || !formData.country || !formData.address || !formData.description) {
       setError('All fields are required');
       return;
     }
+
+    setError(null);
 
     try {
       const response = await api.post('/sellers/createSeller', formData);
@@ -67,7 +70,6 @@ function SellerRegisterPage() {
                 />
               </div>
 
-
               <div className='flex flex-col'>
                 <label htmlFor="name" className='text-gray-700'>Seller Name</label>
                 <input
@@ -80,7 +82,6 @@ function SellerRegisterPage() {
                   required
                 />
               </div>
-
 
               <div className='flex flex-col'>
                 <label htmlFor="contactNumber" className='text-gray-700'>Contact Number</label>
@@ -95,7 +96,6 @@ function SellerRegisterPage() {
                 />
               </div>
 
-
               <div className='flex flex-col'>
                 <label htmlFor="city" className='text-gray-700'>City</label>
                 <input
@@ -108,7 +108,6 @@ function SellerRegisterPage() {
                   required
                 />
               </div>
-
 
               <div className='flex flex-col'>
                 <label htmlFor="state" className='text-gray-700'>State</label>
@@ -123,7 +122,6 @@ function SellerRegisterPage() {
                 />
               </div>
 
-
               <div className='flex flex-col'>
                 <label htmlFor="country" className='text-gray-700'>Country</label>
                 <input
@@ -137,7 +135,6 @@ function SellerRegisterPage() {
                 />
               </div>
 
-
               <div className='flex flex-col'>
                 <label htmlFor="address" className='text-gray-700'>Address</label>
                 <textarea
@@ -149,7 +146,6 @@ function SellerRegisterPage() {
                   required
                 />
               </div>
-
 
               <div className='flex flex-col'>
                 <label htmlFor="description" className='text-gray-700'>Description</label>
@@ -163,7 +159,6 @@ function SellerRegisterPage() {
                 />
               </div>
             </div>
-
 
             <div className='flex justify-center mt-6'>
               <button

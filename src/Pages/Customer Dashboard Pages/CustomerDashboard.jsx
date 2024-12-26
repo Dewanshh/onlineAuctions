@@ -16,7 +16,7 @@ function CustomerDashboard() {
 
   return (
     <Layout>
-      <div className="my-8 px-4 min-h-screen">
+      <div className="py-8 px-4 bg-gray-100 min-h-screen">
         <div className="text-center mb-6">
           <h2 className="text-3xl font-semibold text-gray-800">Customer Dashboard</h2>
           <p className="text-lg text-gray-600">Welcome to Online Auction System</p>
