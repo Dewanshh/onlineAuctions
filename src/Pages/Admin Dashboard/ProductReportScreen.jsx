@@ -28,6 +28,17 @@ function ProductReportScreen() {
     return null;
   };
 
+  const deleteProduct=async (id)=>{
+    try{
+
+      const response=await api.delete(`/products/${id}`).then(res=>res.data);
+      fetchProductData();
+      alert(response);
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
   return (
     <Layout>
       <div className="p-4 bg-gray-100 min-h-screen">
@@ -68,9 +79,15 @@ function ProductReportScreen() {
                   <td className="px-4 py-2 border border-gray-300">{item.minimumBid}</td>
                   <td className="px-4 py-2 border border-gray-300">{item.productType}</td>
                   <td className="px-4 py-2 border border-gray-300">
+                    <div className='flex items-center justify-center space-x-4'>
+
                     <button onClick={()=>navigate(`/listing/${item.id}`)} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                       View
                     </button>
+                    <button onClick={()=>deleteProduct(item.id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                      Delete
+                    </button>
+                    </div>
                   </td>
                 </tr>
               ))}

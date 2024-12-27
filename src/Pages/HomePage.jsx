@@ -11,7 +11,23 @@ export const HomePage = () => {
   const fetchProducts = async () => {
     try {
       const product = await api.get(`/products/all`).then((res) => res.data);
-      const upcomingAndOngoingAuctions = product.filter((item) => item.winner === null);
+      
+
+      const currentDate = new Date();
+
+
+      const upcomingAndOngoingAuctions = product.filter((item) => {
+        const bidStartDate = new Date(item.bidStartDate); 
+        const bidEndDate = new Date(bidStartDate);
+        bidEndDate.setHours(bidStartDate.getHours() + 1);  
+
+
+        return (
+          (currentDate >= bidStartDate && currentDate <= bidEndDate || currentDate < bidStartDate) &&
+          (item.winner === null || item.winner === undefined) 
+        );
+      });
+
       setProducts(upcomingAndOngoingAuctions);
     } catch (e) {
       console.log(e);

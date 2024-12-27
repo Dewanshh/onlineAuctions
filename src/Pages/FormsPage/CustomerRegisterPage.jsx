@@ -30,9 +30,11 @@ function CustomerRegisterPage() {
     const newErrors = {};
     if (!formData.name) newErrors.name = "Name is required.";
     if (!formData.mobileNumber) newErrors.mobileNumber = "Mobile number is required.";
+    else if(formData.mobileNumber.length<10) newErrors.mobileNumber="Mobile Number should contain 10 digits"
     if (!formData.email) newErrors.email = "Email is required.";
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid.";
     if (!formData.customerPassword) newErrors.customerPassword = "Password is required.";
+    else if(formData.customerPassword.length<=4) newErrors.customerPassword="Password Must be greater than 4 letters"
     if (!formData.customerCity) newErrors.customerCity = "City is required.";
     if (!formData.customerState) newErrors.customerState = "State is required.";
     if (!formData.customerCountry) newErrors.customerCountry = "Country is required.";

@@ -32,7 +32,7 @@ function AuctionsListingPage() {
     <Layout>
       <div className='py-8 min-h-screen px-4 bg-gray-100  '>
         <div className="text-3xl font-semibold text-center text-gray-800 mb-6">
-          Ongoing Auctions
+          All Auctions
         </div>
 
 

@@ -15,6 +15,8 @@ function AuctioningProductDescriptionPage() {
   const [isBidClosed, setIsBidClosed] = useState(false);
   const [isBidNotStarted, setIsBidNotStarted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  
   const token = localStorage.getItem("token");
   const role=localStorage.getItem("role");
   // console.log(role);

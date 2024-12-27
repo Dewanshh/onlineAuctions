@@ -137,7 +137,7 @@ function ProductForm() {
 
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {/* Product Title */}
+
               <div className="flex flex-col">
                 <label htmlFor="title" className="text-gray-700">Product Title</label>
                 <input
@@ -152,7 +152,7 @@ function ProductForm() {
                 {errors.title && <span className="text-red-500 text-sm">{errors.title}</span>}
               </div>
 
-              {/* Seller Name */}
+
               <div className="flex flex-col">
                 <label htmlFor="sellerName" className="text-gray-700">Seller Name</label>
                 <select
@@ -173,7 +173,7 @@ function ProductForm() {
                 {errors.sellerName && <span className="text-red-500 text-sm">{errors.sellerName}</span>}
               </div>
 
-              {/* City */}
+
               <div className="flex flex-col">
                 <label htmlFor="city" className="text-gray-700">City</label>
                 <input
@@ -188,7 +188,7 @@ function ProductForm() {
                 {errors.city && <span className="text-red-500 text-sm">{errors.city}</span>}
               </div>
 
-              {/* Minimum Bid */}
+
               <div className="flex flex-col">
                 <label htmlFor="minimumBid" className="text-gray-700">Minimum Bid</label>
                 <input
@@ -203,7 +203,6 @@ function ProductForm() {
                 {errors.minimumBid && <span className="text-red-500 text-sm">{errors.minimumBid}</span>}
               </div>
 
-              {/* Bid Start Date */}
               <div className="flex flex-col">
                 <label htmlFor="bidStartDate" className="text-gray-700">Bid Start Date</label>
                 <input
@@ -218,7 +217,7 @@ function ProductForm() {
                 {errors.bidStartDate && <span className="text-red-500 text-sm">{errors.bidStartDate}</span>}
               </div>
 
-              {/* Product Type */}
+
               <div className="flex flex-col">
                 <label htmlFor="productType" className="text-gray-700">Product Type</label>
                 <input
@@ -234,7 +233,7 @@ function ProductForm() {
               </div>
             </div>
 
-            {/* Product Image */}
+
             <div className="flex flex-col mt-6">
               <label htmlFor="productImage" className="text-gray-700">Product Image</label>
               <input
@@ -257,7 +256,7 @@ function ProductForm() {
               {errors.productImage && <span className="text-red-500 text-sm">{errors.productImage}</span>}
             </div>
 
-            {/* Product Description */}
+
             <div className="flex flex-col mt-6">
               <label htmlFor="productDescription" className="text-gray-700">Product Description</label>
               <textarea
@@ -271,7 +270,6 @@ function ProductForm() {
               {errors.productDescription && <span className="text-red-500 text-sm">{errors.productDescription}</span>}
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-center mt-6">
               <button
                 type="submit"
